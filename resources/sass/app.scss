@@ -1,0 +1,21 @@
+// Fonts
+@import url('https://fonts.bunny.net/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import 'bootstrap/scss/bootstrap';
+
+a {
+    text-decoration: none !important;
+}
+
+.navbar {
+    --bs-navbar-padding-x: 0 !important;
+    --bs-navbar-padding-y: 0 !important;
+}
+
+.dropdown-toggle::after {
+    margin-left: -0.3em !important;
+}
