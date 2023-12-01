@@ -12,8 +12,8 @@ class OrderStatus extends Model
     protected $table = 'statuses_order';
     protected $fillable = ['status'];
 
-    public function storeorder()
+    public function order()
     {
-        return $this->belongsTo(StoreOrder::class, 'id_status');
+        return $this->belongsTo(Order::class, 'id_status');
     }
 }

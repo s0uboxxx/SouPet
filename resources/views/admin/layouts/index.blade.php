@@ -19,4 +19,5 @@
 
 @section('body_scripts')
     <script src="{{ asset('js/script-am.js') }}" defer></script>
+    @yield('admin-body-scripts')
 @endsection

@@ -1,7 +1,10 @@
 @extends('admin.layouts.index')
 
-@section('admin-content')
+@section('modal')
     @include('admin.brands.form')
+@endsection
+
+@section('admin-content')
     <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mb-1"
         onclick="showForm('','','Thêm mới', 'Thêm', '{{ url()->current() . '/create' }}')">
         Thêm mới

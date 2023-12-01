@@ -18,10 +18,10 @@
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
-    <link rel="stylesheet" href="{{asset('build/assets/app-d3d4c8c4.css')}}">
-    <link rel="stylesheet" href="{{asset('build/assets/app-c012c0d2.css')}}">
-    
-    <script type="module" src="{{asset('build/assets/app-4e2c3536.js')}}" defer></script>
+    <link rel="stylesheet" href="{{ asset('build/assets/app-d3d4c8c4.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/assets/app-2eeea12c.css') }}">
+
+    <script type="module" src="{{ asset('build/assets/app-4e2c3536.js') }}" defer></script>
 
     @yield('styles')
     @yield('head_scripts')
@@ -31,14 +31,17 @@
     <div id="app">
         @include('layouts.header')
         @include('auth.confirm')
+
         <main class="mb-5 mt-32">
             @if (session('success'))
                 <div class="alert alert-success text-center">
                     {{ session('success') }}
                 </div>
             @endif
+            
             @yield('content')
         </main>
+        @yield('modal')
     </div>
     <footer class="px-4 footer">
         <div class="text-center lh-2-5 gray-light text-fs-13 text-fst-italic">© 2023 SouPet by
@@ -50,7 +53,11 @@
     <script defer>
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(function() {
-                document.querySelector('.alert').classList.add('hidden');
+                const alertElement = document.querySelector('.alert');
+
+                if (alertElement) {
+                    alertElement.classList.add('hidden');
+                }
             }, 3500);
         });
     </script>

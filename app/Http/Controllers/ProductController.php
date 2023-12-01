@@ -6,10 +6,10 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Brand;
-use App\Models\StoreOrder;
+use App\Models\Order;
 use App\Mail\OrderCreate;
 use Illuminate\Support\Facades\Mail;
-use App\Models\ProductQuantity;
+use App\Models\Storage;
 
 class ProductController extends Controller
 {
@@ -172,7 +172,7 @@ class ProductController extends Controller
     {
         $user = auth()->user();
 
-        $storeOrder = new StoreOrder();
+        $storeOrder = new Order();
         $storeOrder->fill([
             'user_id' => $user->id,
             'product_id' => $request->productId,
@@ -185,7 +185,7 @@ class ProductController extends Controller
 
         $storeOrder->save();
 
-        $productQuantity = ProductQuantity::where('product_id', $request->productId)->first();
+        $productQuantity = Storage::where('product_id', $request->productId)->first();
         $productQuantity->quantity -= $request->quantity;
         $productQuantity->save();
 
@@ -216,7 +216,7 @@ class ProductController extends Controller
     public function trackingOrder()
     {
         $user = auth()->user();
-        $storeOrders = StoreOrder::where('user_id', $user->id)->orderBy('id', 'desc')->get();
+        $storeOrders = Order::where('user_id', $user->id)->orderBy('id', 'desc')->get();
 
         return view('shop.order-tracking', compact('storeOrders'));
     }
@@ -225,7 +225,7 @@ class ProductController extends Controller
     {
         $user = auth()->user();
 
-        $storeOrder = StoreOrder::find($request->id);
+        $storeOrder = Order::find($request->id);
         $storeOrder->status_id = 4;
         
         $storeOrder->save();
@@ -233,7 +233,7 @@ class ProductController extends Controller
         $productId = $storeOrder->product_id;
         $quantity = $storeOrder->quantity;
 
-        $productQuantity = ProductQuantity::where('product_id', $productId)->first();
+        $productQuantity = Storage::where('product_id', $productId)->first();
         $productQuantity->quantity += $quantity;
         $productQuantity->save();
 
@@ -264,7 +264,7 @@ class ProductController extends Controller
     public function orderDetail(Request $request)
     {
         $user = auth()->user();
-        $storeOrder = StoreOrder::find($request->id);
+        $storeOrder = Order::find($request->id);
 
         return view('shop.order-detail', compact('storeOrder'));
     }

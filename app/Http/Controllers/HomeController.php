@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\SliderImage;
+use App\Models\Slider;
 use App\Models\Category;
 use App\Models\Product;
 
@@ -30,7 +30,7 @@ class HomeController extends Controller
         $productsFood = Category::find(3)->products()->orderBy('id', 'desc')->take(4)->get();
         $productsToy = Category::find(4)->products()->orderBy('id', 'desc')->take(4)->get();
 
-        $sliderImages = SliderImage::orderBy('id', 'desc')->take(4)->get();
+        $sliderImages = Slider::orderBy('id', 'desc')->take(3)->get();
 
         return view('home', compact('productsFood', 'productsToy', 'sliderImages'));
     }

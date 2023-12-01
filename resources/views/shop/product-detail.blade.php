@@ -17,9 +17,9 @@
                 <p class="text-sm leading-none text-gray-600">{{ $product->brands->name }}</p>
                 <h1 class="lg:text-2xl text-xl font-semibold lg:leading-6 leading-7 text-gray-800 mt-2">
                     {{ $product->name }}</h1>
-                @if (optional($product->productQuantities)->isNotEmpty())
+                @if (optional($product->storage)->isNotEmpty())
                     <div class="text-sm text-gray-500 mt-1 italic">*Kho:
-                        {{ $product->productQuantities->first()->quantity }} sản phẩm
+                        {{ $product->storage->first()->quantity }} sản phẩm
                     </div>
                 @endif
             </div>
@@ -54,10 +54,10 @@
                 </span>
             </div>
             <div class="py-4 border-b border-gray-200 flex items-center justify-center">
-                @if (optional($product->productQuantities)->isNotEmpty())
+                @if (optional($product->storage)->isNotEmpty())
                     <button id="buyNow"
                         data-product-id="{{ $product->id }}"
-                        data-storage-quantity="{{ $product->productQuantities->first()->quantity }}"
+                        data-storage-quantity="{{ $product->storage->first()->quantity }}"
                         class="inline-flex items-center px-4 py-2 bg-red-600 hover:bg-red-700 
                     text-white text-sm font-medium rounded-md">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
@@ -68,21 +68,8 @@
                         </svg>
                         Mua ngay
                     </button>
-
-                    {{-- <button
-                        class="inline-flex items-center px-4 py-2 bg-indigo-500 hover:bg-indigo-600
-                     text-white text-sm font-medium rounded-md"
-                        disabled>
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path
-                                d="M21 5L19 12H7.37671M20 16H8L6 3H3M16 5.5H13.5M13.5 5.5H11M13.5 5.5V8M13.5 5.5V3M9 20C9 20.5523 8.55228 21 8 21C7.44772 21 7 20.5523 7 20C7 19.4477 7.44772 19 8 19C8.55228 19 9 19.4477 9 20ZM20 20C20 20.5523 19.5523 21 19 21C18.4477 21 18 20.5523 18 20C18 19.4477 18.4477 19 19 19C19.5523 19 20 19.4477 20 20Z"
-                                stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                        </svg>
-                        Thêm vào giỏ
-                    </button> --}}
                 @else
-                    <span class="text-lg leading-4 text-red-800">Sản phẩm hiện chưa được phân phối!</span>
+                    <span class="text-lg leading-4 text-red-800">Sản phẩm hiện đã ngừng phân phối!</span>
                 @endif
             </div>
 

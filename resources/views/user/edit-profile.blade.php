@@ -17,11 +17,11 @@
 
                                 <div class="image overflow-hidden flex justify-center h-5/6 relative">
                                     <label for='avatar' class='mx-auto my-auto'>
-                                        <img id="avatar-preview" class="rounded-full w-40 h-40 border-4 border-white"
+                                        <img id="image-preview" class="rounded-full w-40 h-40 border-4 border-white"
                                         src=" {{ $user->avatar == null ? asset('images/logo-icon.avif') : asset('images/user/' . $user->avatar)}}"
                                         alt="">
                                         <input type="file" class="absolute top-0 left-0 w-full h-full opacity-0" id="avatar" 
-                                            name="avatar" onchange="previewAvatar(this)">
+                                            name="avatar" onchange="previewImage(this)">
                                     </label>
                                 </div>
                             </div>
@@ -112,4 +112,5 @@
 
 @section('body_scripts')
     <script src="{{ asset('js/script-ue.js') }}" defer></script>
+    <script src="{{ asset('js/script-ip.js') }}" defer></script>
 @endsection

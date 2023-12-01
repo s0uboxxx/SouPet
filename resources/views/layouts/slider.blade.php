@@ -3,15 +3,13 @@
     <div id="default-carousel" class="relative" data-carousel="slide">
         <div class="overflow-hidden relative h-56 rounded-lg sm:h-64 xl:h-80 2xl:h-96">
             @foreach ($sliderImages as $key => $slider)
-                @if ($key < 5)
-                    <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                        <a href="{{ $slider->url }}" target="_blank" rel="noopener noreferrer">
-                            <img src="{{ asset('images/slider/' . $slider->image) }}"
+                <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                    <a href="{{ $slider->url }}" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ asset('images/slider/' . $slider->image) }}"
                             class="block absolute top-1/2 left-1/2 w-full -translate-x-1/2 -translate-y-1/2 max-w-full max-h-full"
                             alt="Slide {{ $key + 1 }}" />
-                        </a>
-                    </div>
-                @endif
+                    </a>
+                </div>
             @endforeach
         </div>
 

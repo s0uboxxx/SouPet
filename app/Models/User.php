@@ -19,6 +19,8 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+
+    protected $table = 'users';
     protected $fillable = [
         'name',
         'email',
@@ -57,17 +59,19 @@ class User extends Authenticatable
         $this->notify(new CustomPassword($token));
     }
 
-    public function userStatus() {
+    public function userStatus()
+    {
         return $this->belongsTo(UserStatus::class, 'id_status');
     }
 
-    public function role() {
+    public function role()
+    {
         return $this->belongsTo(Role::class, 'id_role');
     }
 
-    public function storeOrders()
+    public function order()
     {
-        return $this->hasMany(StoreOrder::class, 'user_id');
+        return $this->hasMany(Order::class, 'user_id');
     }
 }
 

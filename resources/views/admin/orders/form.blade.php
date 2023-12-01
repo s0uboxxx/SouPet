@@ -6,13 +6,16 @@
             <form id="url-form" method="POST" action="">
                 @csrf
                 <input type="hidden" id="id" name="id">
-                <input type="text" name="name" id="name"
-                    class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                    title="Vui lòng nhập đúng tên thương hiệu. VD: JerHigh" 
-                    placeholder="Tên thương hiệu" required>
+                <select name="status_id" id="status_id"
+                    class="h-10 border mt-1 rounded px-4 w-full bg-gray-50">
+                    <option value="1">Đã đặt hàng</option>
+                    <option value="2">Đang vận chuyển</option>
+                    <option value="3">Đã giao hàng</option>
+                    <option value="4">Đã hủy</option>
+                </select>
+
                 <div class="flex justify-end mt-2">
-                    <a
-                        class="w-full px-5 py-3 text-sm font-medium leading-5 text-gray-700 transition-colors
+                    <a class="w-full px-5 py-3 text-sm font-medium leading-5 text-gray-700 transition-colors
                                     duration-150 rounded-lg sm:px-4 sm:py-2 sm:w-auto hover:bg-gray-300 cursor-pointer"
                         onclick="closeForm()">
                         Hủy

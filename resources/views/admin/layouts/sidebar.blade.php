@@ -39,7 +39,7 @@
                         <span class="mx-3 text-sm">Quản lý sản phẩm</span>
                     </a>
                     <a class="flex items-center px-6 py-2 text-black-50 !pl-10 
-                    {   { request()->is('manage/storage')
+                        {{ request()->is('manage/storage')
                         ? 'bg-gray-700 !text-white'
                         : 'hover:bg-gray-700 hover:bg-opacity-25 hover:!text-gray-950' }}"
                         href="{{ route('manage-storage') }}">

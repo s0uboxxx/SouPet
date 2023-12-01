@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
-use App\Models\ProductQuantity;
+use App\Models\Storage;
 use App\Models\Brand;
 use App\Models\Category;
-use App\Models\StoreOrder;
 use App\Models\User;
-use App\Models\SliderImage;
+use App\Models\Slider;
+use App\Models\Order;
+use App\Models\ProductCategory;
+use Illuminate\Support\Facades\Schema;
 
 class ManageController extends Controller
 {
@@ -21,20 +23,24 @@ class ManageController extends Controller
     public function product()
     {
         $products = Product::all();
+        $brands = Brand::all();
+        $categories = Category::whereNotIn('id', [3, 4])->get();
 
-        return view('admin.products.product', compact('products'));
+        $categoryF = Category::whereIn('id', [3, 4])->get();
+
+        return view('admin.products.product', compact('products','brands', 'categories', 'categoryF'));
     }
 
     public function storage()
     {
-        $storage = ProductQuantity::all();
+        $storage = Storage::all();
 
         return view('admin.storage.storage', compact('storage'));
     }
 
     public function order()
     {
-        $orders = StoreOrder::all();
+        $orders = Order::all();
 
         return view('admin.orders.order', compact('orders'));
     }
@@ -48,7 +54,7 @@ class ManageController extends Controller
 
     public function slider()
     {
-        $sliders = SliderImage::all();
+        $sliders = Slider::all();
 
         return view('admin.sliders.slider', compact('sliders'));
     }
@@ -69,16 +75,46 @@ class ManageController extends Controller
 
     public function create(Request $request, $manages)
     {
-        $manages = ucfirst($manages);
+        $managesF = ucfirst($manages);
         $namespace = 'App\\Models\\';
 
-        $manage = resolve($namespace . $manages);
+        $manage = resolve($namespace . $managesF);
 
         $formData = $request->all();
-        
-        $formData = $request->except('id','_token');
 
+        $arrayCategory = $request->id_category;
+
+        $formData = $request->except('id', '_token', 'id_category');
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $folder = 'images/' . $manages;
+            $fileName = $this->uploadFile($image, $folder);
+            $formData['image'] = $fileName;
+        }
+
+        $columns = Schema::getColumnListing($manage->getTable());
+        if (in_array('created_at', $columns) && in_array('updated_at', $columns)) {
+            $formData['created_at'] = now();
+            $formData['updated_at'] = now();
+        }
         $manage->insert($formData);
+
+        $manage = $manage->orderBy('id', 'desc')->first();
+
+        if($manages == 'product'){
+            $storage = new Storage();
+            $storage->product_id = $manage->id;
+            $storage->quantity = 0;
+            $storage->save();
+
+            foreach ($arrayCategory as $categoryId) {
+                $product_category = new ProductCategory();
+                $product_category->id_product = $manage->id;
+                $product_category->id_category = $categoryId;
+                $product_category->save();
+            }
+        }
 
         session()->flash('success', 'Dữ liệu đã được thêm vào bảng ' . $manages);
 
@@ -105,18 +141,55 @@ class ManageController extends Controller
     {
         $id = $request->id;
 
-        $manages = ucfirst($manages);
+        $managesF = ucfirst($manages);
         $namespace = 'App\\Models\\';
 
-        $manage = resolve($namespace . $manages);
+        $manage = resolve($namespace . $managesF);
 
         $formData = $request->all();
-        $formData = $request->except('id','_token');
+        $formData = $request->except('id', '_token', 'image', 'quantityAdd');
+
+        if ($request->has('quantityAdd')) {
+            $quantityAdd = $request->quantityAdd;
+            $quantity = $manage->where('id', $id)->first()->quantity;
+            $formData['quantity'] = $quantity + $quantityAdd;
+        }
+
+        if ($request->has('avatar')) {
+            $avatar = $request->file('avatar');
+            $folder = 'images/' . $manages;
+            $fileName = $this->uploadFile($avatar, $folder);
+            $formData['avatar'] = $fileName;
+            $oldAvatar = $manage->where('id', $id)->first()->avatar;
+            $oldFilePath = public_path('images/' . $manages . '/' . $oldAvatar);
+            if (file_exists($oldFilePath)) {
+                unlink($oldFilePath);
+            }
+        }
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $folder = 'images/' . $manages;
+            $fileName = $this->uploadFile($image, $folder);
+            $formData['image'] = $fileName;
+            $oldImage = $manage->where('id', $id)->first()->image;
+            $oldFilePath = public_path('images/' . $manages . '/' . $oldImage);
+            if (file_exists($oldFilePath)) {
+                unlink($oldFilePath);
+            }
+        }
 
         $manage->where('id', $id)->update($formData);
 
         session()->flash('success', 'Dữ liệu đã được chỉnh sửa.');
 
         return redirect()->back();
+    }
+
+    public function uploadFile($file, $folder)
+    {
+        $fileName = time() . '_' . $file->getClientOriginalName();
+        $file->storeAs($folder, $fileName, 'public');
+        return $fileName;
     }
 }

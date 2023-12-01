@@ -6,10 +6,10 @@
             <form id="url-form" method="POST" action="">
                 @csrf
                 <input type="hidden" id="id" name="id">
-                <input type="text" name="name" id="name"
+                <input type="hidden" id="quantity" name="quantity">
+                <input type="number" name="quantityAdd" id="quantityAdd" value="1" min="1"
                     class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                    title="Vui lòng nhập đúng tên thương hiệu. VD: JerHigh" 
-                    placeholder="Tên thương hiệu" required>
+                    title="Nhập số lượng hàng cần bổ sung. Thấp nhất là 1." required>
                 <div class="flex justify-end mt-2">
                     <a
                         class="w-full px-5 py-3 text-sm font-medium leading-5 text-gray-700 transition-colors
