@@ -172,6 +172,16 @@ class ProductController extends Controller
     {
         $user = auth()->user();
 
+        if($user->id_role != 1) {
+            session()->flash('success', 'Vui lòng sử dụng tài khoản khách hàng để đặt hàng!');
+            return redirect()->route('home');
+        }
+
+        if($user->id_status != 1) {
+            session()->flash('success', 'Tài khoản của bạn không thể đặt hàng!');
+            return redirect()->route('home');
+        }
+
         $storeOrder = new Order();
         $storeOrder->fill([
             'user_id' => $user->id,

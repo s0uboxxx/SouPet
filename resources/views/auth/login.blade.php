@@ -1,7 +1,4 @@
 @extends('layouts.app')
-{{-- @section('styles')
-    @vite('resources/css/app.css')
-@endsection --}}
 
 @section('title', 'Trang đăng nhập')
 

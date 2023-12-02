@@ -1,13 +1,19 @@
 document.addEventListener("DOMContentLoaded", function () {
     var closeAccountBtn = document.getElementById("closeAccountBtn");
+    var openAccountBtn = document.getElementById("openAccountBtn");
 
     closeAccountBtn.addEventListener("click", function (e) {
         e.preventDefault();
-        updateIdStatus();
+        updateIdStatus(4);
+    });
+
+    openAccountBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+        updateIdStatus(1);
     });
 });
 
-function updateIdStatus() {
+function updateIdStatus(id_status) {
     const csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
 
     fetch("/edit-profile", {
@@ -18,7 +24,7 @@ function updateIdStatus() {
             "Content-type" : "application/json"
         },
         body: JSON.stringify({
-            id_status: 4
+            id_status: id_status
         })
 
     })

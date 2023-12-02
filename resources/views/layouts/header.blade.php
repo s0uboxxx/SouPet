@@ -24,13 +24,13 @@
                     style="display: none;">
                 </ul>
             </div>
-            
             <div class="flex items-center justify-end" id="navbarSupportedContent">
                 <div class="navbar">
                     <div class="dropdown">
                         <span
                             class="dropbtn inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                            id="menu-button" aria-expanded="true" aria-haspopup="true" style="background-color: rgb(0,191,255) !important;">
+                            id="menu-button" aria-expanded="true" aria-haspopup="true"
+                            style="background-color: rgb(0,191,255) !important;">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                 stroke-width="1.6" stroke="currentColor" class="w-6 h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round"
@@ -62,16 +62,21 @@
                                     @endif
                                 @else
                                     <li class="nav-item dropdown">
-                                        <a class="dropdown-item rounded-2xl" href="{{ route('trackingOrder') }}">
-                                            {{ __('Theo dõi đơn hàng') }}
-                                        </a>
-
+                                        @if (Auth::user()->id_role == 1 || Auth::user()->id_role == 2 || Auth::user()->id_role == 4)
+                                            <a class="dropdown-item rounded-2xl" href="{{ route('dashboard') }}">
+                                                {{ __('Dashboard') }}
+                                            </a>
+                                        @else
+                                            <a class="dropdown-item rounded-2xl" href="{{ route('trackingOrder') }}">
+                                                {{ __('Theo dõi đơn hàng') }}
+                                            </a>
+                                        @endif
                                         <a class="dropdown-item rounded-2xl" href="{{ route('profile') }}">
                                             {{ __('Thông tin cá nhân') }}
                                         </a>
 
                                         <a onclick="openModal('{{ route('changePassword') }}', 'Đặt lại mật khẩu', 'tài khoản')"
-                                        class="dropdown-item rounded-2xl cursor-pointer">
+                                            class="dropdown-item rounded-2xl cursor-pointer">
                                             {{ __('Đổi mật khẩu') }}
                                         </a>
 
@@ -96,13 +101,17 @@
         <nav class="sm:flex sm:justify-center sm:items-center">
             <div class="flex flex-col sm:flex-row">
                 <a class="my-2 text-gray-500 hover:text-gray-600 hover:font-semibold sm:mx-3 sm:mt-0
-                {{ request()->is('/') ? 'font-semibold text-gray-800' : '' }}" href="/">Home</a>
+                {{ request()->is('/') ? 'font-semibold text-gray-800' : '' }}"
+                    href="/">Home</a>
                 <a class="my-2 text-gray-500 hover:text-gray-600 hover:font-semibold sm:mx-3 sm:mt-0
-                {{ request()->is('food') ? 'font-semibold text-gray-800' : '' }}" href="/food">Thức ăn</a>
+                {{ request()->is('food') ? 'font-semibold text-gray-800' : '' }}"
+                    href="/food">Thức ăn</a>
                 <a class="my-2 text-gray-500 hover:text-gray-600 hover:font-semibold sm:mx-3 sm:mt-0
-                {{ request()->is('toy') ? 'font-semibold text-gray-800' : '' }}" href="/toy">Đồ chơi</a>
+                {{ request()->is('toy') ? 'font-semibold text-gray-800' : '' }}"
+                    href="/toy">Đồ chơi</a>
                 <a class="my-2 text-gray-500 hover:text-gray-600 hover:font-semibold sm:mx-3 sm:mt-0
-                {{ request()->is('about') ? 'font-semibold text-gray-800' : '' }}" href="/about">Giới thiệu</a>
+                {{ request()->is('about') ? 'font-semibold text-gray-800' : '' }}"
+                    href="/about">Giới thiệu</a>
             </div>
         </nav>
     </div>

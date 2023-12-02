@@ -4,7 +4,7 @@
             <ul class="flex flex-col py-4 space-y-1 mb-4 mt-28">
                 <a href="{{ route('dashboard') }}"
                     class="flex items-center px-6 py-2 text-black-50 
-                    @if (request()->is('dashboard')) bg-gray-700 !text-white 
+                    @if (request()->is('manage')) bg-gray-700 !text-white 
                     @else hover:bg-gray-700 hover:bg-opacity-25 hover:!text-gray-950 @endif">
                     <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
@@ -26,22 +26,63 @@
                     <span class="mx-3 text-base">Quản lý</span>
                 </button>
                 <div id="dropdown-menu" class=" {{ request()->is('manage/*') ? 'block' : 'hidden' }}">
-                    <a class="flex items-center px-6 py-2 text-black-50 !pl-10
+                    @if (Auth::user()->id_role == 1 || Auth::user()->id_role == 4)
+                        <a class="flex items-center px-6 py-2 text-black-50 !pl-10
                         {{ request()->is('manage/product')
                             ? 'bg-gray-700 !text-white'
                             : 'hover:bg-gray-700 hover:bg-opacity-25 hover:!text-gray-950' }}"
-                        href="{{ route('manage-product') }}">
-                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                        </svg>
-                        <span class="mx-3 text-sm">Quản lý sản phẩm</span>
-                    </a>
+                            href="{{ route('manage-product') }}">
+                            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                            </svg>
+                            <span class="mx-3 text-sm">Quản lý sản phẩm</span>
+                        </a>
+                        @if (Auth::user()->id_role == 4)
+                            <a class="flex items-center px-6 py-2 text-black-50 !pl-10 
+                            {{ request()->is('manage/user')
+                            ? 'bg-gray-700 !text-white'
+                            : 'hover:bg-gray-700 hover:bg-opacity-25 hover:!text-gray-950' }}"
+                                href="{{ route('manage-user') }}">
+                                <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                </svg>
+                                <span class="mx-3 text-sm">Quản lý người dùng</span>
+                            </a>
+                        @endif
+                        <a class="flex items-center px-6 py-2 text-black-50 !pl-10 
+                        {{ request()->is('manage/brand')
+                            ? 'bg-gray-700 !text-white'
+                            : 'hover:bg-gray-700 hover:bg-opacity-25 hover:!text-gray-950' }}"
+                            href="{{ route('manage-brand') }}">
+                            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                            </svg>
+                            <span class="mx-3 text-sm">Quản lý thương hiệu</span>
+                        </a>
+                        <a class="flex items-center px-6 py-2 text-black-50 !pl-10 
+                        {{ request()->is('manage/category')
+                            ? 'bg-gray-700 !text-white'
+                            : 'hover:bg-gray-700 hover:bg-opacity-25 hover:!text-gray-950' }}"
+                            href="{{ route('manage-category') }}">
+                            <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                            </svg>
+                            <span class="mx-3 text-sm">Quản lý phân loại</span>
+                        </a>
+                    @endif
+
                     <a class="flex items-center px-6 py-2 text-black-50 !pl-10 
                         {{ request()->is('manage/storage')
-                        ? 'bg-gray-700 !text-white'
-                        : 'hover:bg-gray-700 hover:bg-opacity-25 hover:!text-gray-950' }}"
+                            ? 'bg-gray-700 !text-white'
+                            : 'hover:bg-gray-700 hover:bg-opacity-25 hover:!text-gray-950' }}"
                         href="{{ route('manage-storage') }}">
                         <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor">
@@ -49,42 +90,6 @@
                                 d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                         </svg>
                         <span class="mx-3 text-sm">Quản lý kho hàng</span>
-                    </a>
-                    <a class="flex items-center px-6 py-2 text-black-50 !pl-10 
-                        {{ request()->is('manage/user')
-                            ? 'bg-gray-700 !text-white'
-                            : 'hover:bg-gray-700 hover:bg-opacity-25 hover:!text-gray-950' }}"
-                        href="{{ route('manage-user') }}">
-                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                        </svg>
-                        <span class="mx-3 text-sm">Quản lý người dùng</span>
-                    </a>
-                    <a class="flex items-center px-6 py-2 text-black-50 !pl-10 
-                        {{ request()->is('manage/brand')
-                            ? 'bg-gray-700 !text-white'
-                            : 'hover:bg-gray-700 hover:bg-opacity-25 hover:!text-gray-950' }}"
-                        href="{{ route('manage-brand') }}">
-                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                        </svg>
-                        <span class="mx-3 text-sm">Quản lý thương hiệu</span>
-                    </a>
-                    <a class="flex items-center px-6 py-2 text-black-50 !pl-10 
-                        {{ request()->is('manage/category')
-                            ? 'bg-gray-700 !text-white'
-                            : 'hover:bg-gray-700 hover:bg-opacity-25 hover:!text-gray-950' }}"
-                        href="{{ route('manage-category') }}">
-                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                            stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                        </svg>
-                        <span class="mx-3 text-sm">Quản lý phân loại</span>
                     </a>
                     <a class="flex items-center px-6 py-2 text-black-50 !pl-10 
                         {{ request()->is('manage/order')
@@ -100,8 +105,8 @@
                     </a>
                     <a class="flex items-center px-6 py-2 text-black-50 !pl-10 
                         {{ request()->is('manage/slider')
-                        ? 'bg-gray-700 !text-white'
-                        : 'hover:bg-gray-700 hover:bg-opacity-25 hover:!text-gray-950' }}"
+                            ? 'bg-gray-700 !text-white'
+                            : 'hover:bg-gray-700 hover:bg-opacity-25 hover:!text-gray-950' }}"
                         href="{{ route('manage-slider') }}">
                         <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                             stroke="currentColor">

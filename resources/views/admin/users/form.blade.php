@@ -11,20 +11,18 @@
                     <input type="text" name="name" id="name"
                         class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" placeholder="Nhập họ và tên" required />
                     <input type="date" name="dob" id="dob" max="{{ date('Y-m-d', strtotime('-18 year')) }}"
-                        class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" title="Chỉ mua hàng khi bạn đã 18 tuổi"
-                        required />
-                    <select name="gender" id="gender" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                        required>
+                        class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" />
+                    <select name="gender" id="gender" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50">
                         <option value="" selected>Chọn giới tính</option>
                         <option value="Nam">Nam</option>
                         <option value="Nữ">Nữ</option>
                     </select>
                     <input type="text" name="phone" id="phone"
                         class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" pattern="^0?[0-9]{9}$"
-                        title="VD: 0123456789 - 10 số và bắt đầu bằng 0" placeholder="Vui lòng nhập đúng số điện thoại"
-                        required />
+                        title="VD: 0123456789 - 10 số và bắt đầu bằng 0"
+                        placeholder="Vui lòng nhập đúng số điện thoại" />
                     <input type="text" name="address" id="address"
-                        class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" placeholder="Nhập địa chỉ" required />
+                        class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" placeholder="Nhập địa chỉ" />
                     <input type="email" name="email" id="email"
                         class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" placeholder="Nhập email" required />
                     <input type="password" name="password" id="password"
@@ -40,7 +38,7 @@
 
                 <img id="image-preview" class="w-48 h-48 border-4 border-white rounded-full m-auto">
                 <input type="file" id="image" class="h-10 mt-1 rounded w-full bg-gray-50" name="avatar"
-                    onchange="previewImage(this)" required>
+                    onchange="previewImage(this)">
 
                 <div class="flex justify-end mt-2">
                     <a class="w-full px-5 py-3 text-sm font-medium leading-5 text-gray-700 transition-colors

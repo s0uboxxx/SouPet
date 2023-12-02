@@ -11,7 +11,6 @@
     </div>
     <div class="sm:w-1/2 p-5">
         <div class="text" style="text-align: justify">
-            {{-- <span class="text-gray-500 border-b-2 border-indigo-600 uppercase">Về tôi</span> --}}
             <h2 class="my-4 font-bold text-3xl  sm:text-4xl ">Về <span class="text-indigo-600">Trang Web</span>
             </h2>
             <p class="text-gray-700 text-base">

@@ -110,17 +110,9 @@
     </div>
 @endsection
 
-@section('styles')
-    {{-- <link rel="stylesheet" href="https://unpkg.com/awesomplete/awesomplete.css" /> --}}
-@endsection
-
 @section('head_scripts')
     <script>
         var urlr = '/order'
         window.history.replaceState(null, null, urlr);
     </script>
-@endsection
-
-@section('body_scripts')
-    {{-- <script src="{{ asset('build/assets/script-ue.js') }}" defer></script> --}}
 @endsection

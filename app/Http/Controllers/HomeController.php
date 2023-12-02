@@ -31,7 +31,6 @@ class HomeController extends Controller
         $productsToy = Category::find(4)->products()->orderBy('id', 'desc')->take(4)->get();
 
         $sliderImages = Slider::orderBy('id', 'desc')->take(3)->get();
-
         return view('home', compact('productsFood', 'productsToy', 'sliderImages'));
     }
 

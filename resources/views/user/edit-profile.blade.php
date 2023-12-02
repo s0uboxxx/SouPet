@@ -18,10 +18,10 @@
                                 <div class="image overflow-hidden flex justify-center h-5/6 relative">
                                     <label for='avatar' class='mx-auto my-auto'>
                                         <img id="image-preview" class="rounded-full w-40 h-40 border-4 border-white"
-                                        src=" {{ $user->avatar == null ? asset('images/logo-icon.avif') : asset('images/user/' . $user->avatar)}}"
-                                        alt="">
-                                        <input type="file" class="absolute top-0 left-0 w-full h-full opacity-0" id="avatar" 
-                                            name="avatar" onchange="previewImage(this)">
+                                            src=" {{ $user->avatar == null ? asset('images/logo-icon.avif') : asset('images/user/' . $user->avatar) }}"
+                                            alt="">
+                                        <input type="file" class="absolute top-0 left-0 w-full h-full opacity-0"
+                                            id="avatar" name="avatar" onchange="previewImage(this)">
                                     </label>
                                 </div>
                             </div>
@@ -55,8 +55,8 @@
                                         <select name="gender" id="gender"
                                             class="h-10 border mt-1 rounded px-4 w-full bg-gray-50">
                                             <option value=""></option>
-                                            <option value="Nam" <?php echo ($user->gender === 'Nam') ? 'selected' : ''; ?>>Nam</option>
-                                            <option value="Nữ" <?php echo ($user->gender === "Nữ") ? "selected" : ""; ?>>Nữ</option>
+                                            <option value="Nam" <?php echo $user->gender === 'Nam' ? 'selected' : ''; ?>>Nam</option>
+                                            <option value="Nữ" <?php echo $user->gender === 'Nữ' ? 'selected' : ''; ?>>Nữ</option>
                                         </select>
                                     </div>
 
@@ -74,15 +74,32 @@
                                             value="{{ $user->dob }}" />
                                     </div>
 
-                                    <div class="md:col-span-3 group">
-                                        <label for="close_account" class="italic">*Nếu bạn muốn đóng tài khoản</label>
-                                        <button id="closeAccountBtn"
-                                            class="h-10 border mt-1 rounded w-full
-                                            bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
-                                            Đóng tài khoản
-                                        </button>
-                                    </div>
-
+                                    @if (Auth::user()->id_status == 4)
+                                        <div class="md:col-span-3">
+                                            <label for="open_account" class="italic">*Nếu bạn muốn mở lại tài khoản</label>
+                                            <button id="openAccountBtn"
+                                                class="h-10 border mt-1 rounded w-full
+                                                bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
+                                                Mở tài khoản
+                                            </button>
+                                        </div>
+                                    @elseif(Auth::user()->id_status == 1)
+                                        <div class="md:col-span-3">
+                                            <label for="close_account" class="italic">*Nếu bạn muốn đóng tài khoản</label>
+                                            <button id="closeAccountBtn"
+                                                class="h-10 border mt-1 rounded w-full
+                                                bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
+                                                Đóng tài khoản
+                                            </button>
+                                        </div>
+                                    @else
+                                        <div class="md:col-span-3">
+                                            <label for=""></label>
+                                            <div class="text-red-700 text-lg italic pt-2.5">
+                                                Tài khoản của bạn đã bị khóa
+                                            </div>
+                                        </div>
+                                    @endif
                                     <input type="hidden" name="id_status" value="1">
                                     <div class="md:col-span-5 text-right">
                                         <div class="inline-flex items-end">
@@ -100,14 +117,6 @@
             </div>
         </div>
     </div>
-@endsection
-
-@section('styles')
-    {{-- <link rel="stylesheet" href="https://unpkg.com/awesomplete/awesomplete.css" /> --}}
-@endsection
-
-@section('head_scripts')
-    {{-- <script src="https://unpkg.com/awesomplete/awesomplete.min.js" async></script> --}}
 @endsection
 
 @section('body_scripts')
