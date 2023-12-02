@@ -83,8 +83,13 @@ class ManageController extends Controller
         $formData = $request->all();
 
         $arrayCategory = $request->id_category;
+        $password = $request->password;
 
-        $formData = $request->except('id', '_token', 'id_category');
+        $formData = $request->except('id', '_token', 'id_category', 'password');
+
+        if ($request->has('password')) {
+            $formData['password'] = bcrypt($password);
+        }
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
