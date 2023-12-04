@@ -1,5 +1,7 @@
 @extends('admin.layouts.index')
 
+@section('title', 'Bảng điều khiển')
+
 @section('admin-head-scripts')
     <script src="{{ @asset('vendor/larapex-charts/apexcharts.js') }}"></script>
 @endsection
