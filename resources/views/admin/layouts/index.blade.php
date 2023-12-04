@@ -15,6 +15,7 @@
 
 @section('head_scripts')
     <script src="{{ asset('js/script-as.js') }}"></script>
+    @yield('admin-head-scripts')
 @endsection
 
 @section('body_scripts')

@@ -14,7 +14,7 @@
                             d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
                     </svg>
 
-                    <span class="mx-3 text-base">Dashboard</span>
+                    <span class="mx-3 text-base">Bảng điều khiển</span>
                 </a>
 
                 <button id="dropdown-menu-toggle" class="flex items-center px-6 py-2 text-black">
@@ -75,7 +75,7 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                             </svg>
-                            <span class="mx-3 text-sm">Quản lý phân loại</span>
+                            <span class="mx-3 text-sm">Quản lý danh mục</span>
                         </a>
                     @endif
 
@@ -120,7 +120,3 @@
         </div>
     </div>
 </div>
-
-{{-- @section('styles')
-    <link rel="stylesheet" href="{{ asset('build/assets/style-ss.css') }}">
-{{-- @endsection --}}

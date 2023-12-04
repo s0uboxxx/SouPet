@@ -23,7 +23,7 @@
                         @foreach ($storage as $product)
                             <tr class="text-gray-700 dark:text-gray-400">
                                 <td class="px-4 py-3">
-                                    {{ $loop->iteration }}
+                                    {{ ($storage->currentPage() - 1) * $storage->perPage() + $loop->iteration }}
                                 </td>
                                 <td class="px-4 py-3 text-ellipsis overflow-hidden w-48"
                                     style="max-width: 200px;text-overflow:ellipsis">
@@ -69,6 +69,11 @@
                 @endif
             </table>
         </div>
+        @if ($storage->total() > 0)
+            <div class="mt-4">
+                {{ $storage->links() }}
+            </div>
+        @endif
     </div>
 @endsection
 

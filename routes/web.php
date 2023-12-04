@@ -45,10 +45,6 @@ Route::get('/order/detail', function () {
     return redirect()->route('trackingOrder');
 });
 
-// Route::get('/manages', function () {
-//     return redirect()->route('dashboard');
-// });
-
 Route::get('/search', [HomeController::class, 'search'])->name('search');
 
 Route::get('/alert', [HomeController::class, 'alert'])->name('alert');

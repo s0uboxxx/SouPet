@@ -19,7 +19,7 @@
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
     <link rel="stylesheet" href="{{ asset('build/assets/app-d3d4c8c4.css') }}">
-    <link rel="stylesheet" href="{{ asset('build/assets/app-77f2b128.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/assets/app-9d5f9258.css') }}">
 
     <script type="module" src="{{ asset('build/assets/app-4e2c3536.js') }}" defer></script>
 

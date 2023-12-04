@@ -12,69 +12,92 @@ use App\Models\Slider;
 use App\Models\Order;
 use App\Models\ProductCategory;
 use Illuminate\Support\Facades\Schema;
+use App\Charts\TotalOrdersChart;
+use App\Charts\TotalBrandsChart;
+use App\Charts\TotalCategoryChart;
 
 class ManageController extends Controller
 {
     public function index()
     {
-        return view('admin.dashboard');
+        $customers = User::where('id_role', 3)->get();
+        $products = Product::all();
+        $orders = Order::all();
+
+        $larapexChart = new \ArielMejiaDev\LarapexCharts\LarapexChart();
+
+        $totalOrdersChart = new TotalOrdersChart($larapexChart);
+        $orderData = $totalOrdersChart->build($orders);
+
+        $totalBrandsChart = new TotalBrandsChart($larapexChart);
+        $brandData = $totalBrandsChart->build();
+
+        $totalCategoryChart = new TotalCategoryChart($larapexChart);
+        $categoryData = $totalCategoryChart->build();
+
+        return view(
+            'admin.dashboard',
+            compact('customers', 'products', 'orders', 'orderData', 'brandData', 'categoryData')
+        );
     }
 
     public function product()
     {
-        $products = Product::all();
+        $products = Product::paginate(9);
         $brands = Brand::all();
         $categories = Category::whereNotIn('id', [3, 4])->get();
 
         $categoryF = Category::whereIn('id', [3, 4])->get();
 
-        return view('admin.products.product', compact('products','brands', 'categories', 'categoryF'));
+        return view('admin.products.product', compact('products', 'brands', 'categories', 'categoryF'));
     }
 
     public function storage()
     {
-        $storage = Storage::all();
+        $storage = Storage::paginate(9);
 
         return view('admin.storage.storage', compact('storage'));
     }
 
     public function order()
     {
-        $orders = Order::all();
+        $orders = Order::paginate(9);
 
         return view('admin.orders.order', compact('orders'));
     }
 
     public function user()
     {
-        $users = User::all();
+        $users = User::paginate(9);
 
         return view('admin.users.user', compact('users'));
     }
 
     public function slider()
     {
-        $sliders = Slider::all();
+        $sliders = Slider::paginate(9);
 
         return view('admin.sliders.slider', compact('sliders'));
     }
 
     public function brand()
     {
-        $brands = Brand::all();
+        $brands = Brand::paginate(9);
 
         return view('admin.brands.brand', compact('brands'));
     }
 
     public function category()
     {
-        $categories = Category::all();
+        $categories = Category::paginate(9);
 
         return view('admin.categories.category', compact('categories'));
     }
 
     public function create(Request $request, $manages)
     {
+        $this->authorize('create', $manages);
+
         $managesF = ucfirst($manages);
         $namespace = 'App\\Models\\';
 
@@ -107,7 +130,7 @@ class ManageController extends Controller
 
         $manage = $manage->orderBy('id', 'desc')->first();
 
-        if($manages == 'product'){
+        if ($manages == 'product') {
             $storage = new Storage();
             $storage->product_id = $manage->id;
             $storage->quantity = 0;
@@ -128,6 +151,8 @@ class ManageController extends Controller
 
     public function delete(Request $request, $manages)
     {
+        $this->authorize('delete', $manages);
+
         $id = $request->id;
 
         $manages = ucfirst($manages);
@@ -144,15 +169,17 @@ class ManageController extends Controller
 
     public function edit(Request $request, $manages)
     {
+        $this->authorize('delete', $manages);
+        
         $id = $request->id;
 
         $managesF = ucfirst($manages);
         $namespace = 'App\\Models\\';
-
         $manage = resolve($namespace . $managesF);
 
-        $formData = $request->all();
-        $formData = $request->except('id', '_token', 'image', 'quantityAdd');
+        $arrayCategory = $request->id_category;
+
+        $formData = $request->except('id', '_token', 'image', 'quantityAdd', 'id_category');
 
         if ($request->has('quantityAdd')) {
             $quantityAdd = $request->quantityAdd;
@@ -185,6 +212,19 @@ class ManageController extends Controller
         }
 
         $manage->where('id', $id)->update($formData);
+
+        if ($manages == 'product') {
+            $product_category = ProductCategory::where('id_product', $id)->get();
+            foreach ($product_category as $pc) {
+                $pc->delete();
+            }
+            foreach ($arrayCategory as $categoryId) {
+                $product_category = new ProductCategory();
+                $product_category->id_product = $id;
+                $product_category->id_category = $categoryId;
+                $product_category->save();
+            }
+        }
 
         session()->flash('success', 'Dữ liệu đã được chỉnh sửa.');
 

@@ -1,5 +1,5 @@
 <header class="header">
-    <div class="container mx-auto px-6 py-1">
+    <div class="mx-auto px-6 py-1 !max-w-screen-xl">
         <div class="flex items-center justify-between">
             <div class="hidden text-gray-600 md:flex md:items-center">
                 <a class="navbar-brand" href="{{ url('/') }}">
@@ -64,7 +64,7 @@
                                     <li class="nav-item dropdown">
                                         @if (Auth::user()->id_role == 1 || Auth::user()->id_role == 2 || Auth::user()->id_role == 4)
                                             <a class="dropdown-item rounded-2xl" href="{{ route('dashboard') }}">
-                                                {{ __('Dashboard') }}
+                                                {{ __('Trang quản trị') }}
                                             </a>
                                         @else
                                             <a class="dropdown-item rounded-2xl" href="{{ route('trackingOrder') }}">

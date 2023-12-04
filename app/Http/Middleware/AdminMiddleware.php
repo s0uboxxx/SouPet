@@ -21,6 +21,9 @@ class AdminMiddleware
 
         session()->flash('success', 'Bạn không có quyền truy cập vào trang này.');
 
+        if (auth()->check() && auth()->user()->id_role == 2) {
+            return redirect()->route('dashboard');
+        }
         return redirect()->route('home');
     }
 }

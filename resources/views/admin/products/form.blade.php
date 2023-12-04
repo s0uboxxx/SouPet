@@ -11,13 +11,14 @@
                     <input type="text" name="name" id="name"
                         class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" placeholder="Nhập tên sản phẩm"
                         required />
-                    <input type="number" name="weight" id="weight" min="100"
+                    <input type="number" name="weight" id="weight" min="10"
                         class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" placeholder="Nhập khối lượng"
                         required />
                     <input type="number" name="price" id="price" min="10000"
                         class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" placeholder="Nhập giá" required />
-                    <input type="text" name="description" id="description"
-                        class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" placeholder="Nhập mô tả" required />
+                    <textarea name="description" id="description"
+                        class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" placeholder="Nhập mô tả" required >
+                    </textarea>
                     <select name="id_brand" id="id_brand" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                         required>
                         <option value="" selected>Chọn thương hiệu</option>
@@ -26,13 +27,12 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="text-base font-bold my-2">Chọn phân loại</div>
+                <div class="text-base font-bold my-2">Chọn danh mục</div>
                 <div class="grid grid-cols-2 gap-2">
                     @foreach ($categoryF as $category)
                         <div>
                             <input type="radio" name="id_category[]" value="{{ $category->id }}"
-                                id="{{ $category->name }}" class="peer hidden [&:checked_+_label_svg]:block" required />
-
+                                id="{{ $category->id }}" class="peer hidden [&:checked_+_label_svg]:block" required />
                             <label for="{{ $category->name }}"
                                 class="flex cursor-pointer items-center justify-between rounded-lg border border-gray-100 bg-white p-3
                                     text-sm font-medium shadow-sm hover:border-gray-200 peer-checked:border-blue-500 peer-checked:ring-1 
@@ -57,7 +57,7 @@
                     @foreach ($categories as $category)
                         <div class="w-full border-b border-gray-200 rounded-t-lg">
                             <div class="flex items-center ps-3">
-                                <input id="{{ $category->name }}" type="checkbox" value="{{ $category->id }}" name ="id_category[]"
+                                <input id="{{ $category->id }}" type="checkbox" value="{{ $category->id }}" name ="id_category[]"
                                     class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-20">
                                 <label for="{{ $category->name }}"
                                     class="w-full py-2 ms-2 text-sm font-medium text-gray-900">{{ $category->name }}</label>
@@ -68,7 +68,7 @@
 
                 <img id="image-preview" class="w-96 h-48 border-4 border-white mt-1">
                 <input type="file" id="image" class="h-10 mt-1 rounded w-full bg-gray-50" name="image"
-                    onchange="previewImage(this)" required>
+                    onchange="previewImage(this)">
 
                 <div class="flex justify-end mt-2">
                     <a class="w-full px-5 py-3 text-sm font-medium leading-5 text-gray-700 transition-colors

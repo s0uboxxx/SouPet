@@ -33,7 +33,7 @@
                         @foreach ($users as $user)
                             <tr class="text-gray-700 dark:text-gray-400">
                                 <td class="px-4 py-3">
-                                    {{ $loop->iteration }}
+                                    {{ ($users->currentPage() - 1) * $users->perPage() + $loop->iteration }}
                                 </td>
                                 <td class="px-4 py-3 text-ellipsis overflow-hidden w-48"
                                     style="max-width: 200px;text-overflow:ellipsis">
@@ -106,6 +106,11 @@
                 @endif
             </table>
         </div>
+        @if ($users->total() > 0)
+            <div class="mt-4">
+                {{ $users->links() }}
+            </div>
+        @endif
     </div>
 @endsection
 

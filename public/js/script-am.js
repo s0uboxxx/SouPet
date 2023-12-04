@@ -6,6 +6,19 @@ function showForm(id, values, title, actionText, url) {
     const btnName = document.getElementById("btn-submit");
     const titleForm = document.getElementById("title-form");
 
+    const idCategoryArray = values?.id_category?.split(',')?.map(Number) || [];
+
+    if (idCategoryArray?.length) {
+        idCategoryArray.splice(idCategoryArray.indexOf(0), 1);
+
+        idCategoryArray.forEach(categoryId => {
+            const checkbox = document.getElementById(categoryId);
+            if (checkbox) {
+                checkbox.checked = true;
+            }
+        });
+    }
+    
     modalForm.classList.remove("hidden");
     btnName.innerHTML = actionText;
     titleForm.innerHTML = title;
@@ -33,8 +46,10 @@ function showForm(id, values, title, actionText, url) {
         }
 
         const password = document.getElementById("password");
-        password.disabled = true;
-        password.hidden = true;
+        if (password) {
+            password.disabled = true;
+            password.hidden = true;
+        }
 
         for (const key in values) {
             if (values.hasOwnProperty(key)) {

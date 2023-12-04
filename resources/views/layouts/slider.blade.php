@@ -1,5 +1,4 @@
 <div class="mx-auto max-w-80">
-
     <div id="default-carousel" class="relative" data-carousel="slide">
         <div class="overflow-hidden relative h-56 rounded-lg sm:h-64 xl:h-80 2xl:h-96">
             @foreach ($sliderImages as $key => $slider)

@@ -26,7 +26,7 @@
                         @foreach ($sliders as $slider)
                             <tr class="text-gray-700 dark:text-gray-400">
                                 <td class="px-4 py-3">
-                                    {{ $loop->iteration }}
+                                    {{ ($sliders->currentPage() - 1) * $sliders->perPage() + $loop->iteration }}
                                 </td>
                                 <td class="px-4 py-3 text-sm">
                                     <img src="{{ asset('/images/slider') . '/' . $slider->image }}"
@@ -72,6 +72,11 @@
                 @endif
             </table>
         </div>
+        @if ($sliders->total() > 0)
+            <div class="mt-4">
+                {{ $sliders->links() }}
+            </div>
+        @endif
     </div>
 @endsection
 
