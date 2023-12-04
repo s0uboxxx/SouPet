@@ -1,5 +1,7 @@
 @extends('admin.layouts.index')
 
+@section('title', 'Quản lý sản phẩm')
+
 @section('modal')
     @include('admin.products.form')
 @endsection

@@ -1,5 +1,7 @@
 @extends('admin.layouts.index')
 
+@section('title', 'Quản lý bảng tin')
+
 @section('modal')
     @include('admin.sliders.form')
 @endsection

@@ -1,7 +1,5 @@
 @extends('layouts.app')
 
-@section('title', 'Trang quản lý')
-
 @section('content')
     <div class="flex">
         <div class="w-1/6 p-4">

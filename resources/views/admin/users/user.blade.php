@@ -1,5 +1,7 @@
 @extends('admin.layouts.index')
 
+@section('title', 'Quản lý người dùng')
+
 @section('modal')
     @include('admin.users.form')
 @endsection
@@ -114,12 +116,6 @@
     </div>
 @endsection
 
-{{-- @section('head_scripts')
-    <script>
-        var urlr = '/manages'
-        window.history.replaceState(null, null, urlr);
-    </script>
-@endsection --}}
 @section('admin-body-scripts')
     <script src="{{ asset('js/script-ip.js') }}" defer></script>
 @endsection

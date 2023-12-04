@@ -1,5 +1,7 @@
 @extends('admin.layouts.index')
 
+@section('title', 'Quản lý kho hàng')
+
 @section('modal')
     @include('admin.storage.form')
 @endsection
