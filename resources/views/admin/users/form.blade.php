@@ -6,7 +6,6 @@
             <form id="url-form" method="POST" action="" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" id="id" name="id">
-                <input type="hidden" id="id_status" name="id_status" value="1">
                 <div class="grid grid-cols-3 gap-2">
                     <input type="text" name="name" id="name"
                         class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" placeholder="Nhập họ và tên" required />
@@ -33,6 +32,14 @@
                         <option value="3">Khách hàng</option>
                         <option value="2">Nhân viên</option>
                         <option value="1">Admin</option>
+                        <option value="4" disabled>Super Admin</option>
+                    </select>
+                    <select name="id_status" id="id_status" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" hidden>
+                        <option value="">Chọn trạng thái</option>
+                        <option value="1">Đang hoạt động</option>
+                        <option value="2">Tạm khóa</option>
+                        <option value="3">Khóa vĩnh viễn</option>
+                        <option value="4">Đã đóng</option>
                     </select>
                 </div>
 

@@ -19,7 +19,7 @@
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
     <link rel="stylesheet" href="{{ asset('build/assets/app-d3d4c8c4.css') }}">
-    <link rel="stylesheet" href="{{ asset('build/assets/app-9d5f9258.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/assets/app-c177df69.css') }}">
 
     <script type="module" src="{{ asset('build/assets/app-4e2c3536.js') }}" defer></script>
 
@@ -31,7 +31,6 @@
     <div id="app">
         @include('layouts.header')
         @include('auth.confirm')
-
         <main class="mb-5 mt-32">
             @if (session('success'))
                 <div class="alert alert-success text-center">

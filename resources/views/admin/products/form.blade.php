@@ -17,8 +17,7 @@
                     <input type="number" name="price" id="price" min="10000"
                         class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" placeholder="Nhập giá" required />
                     <textarea name="description" id="description"
-                        class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" placeholder="Nhập mô tả" required >
-                    </textarea>
+                        class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" placeholder="Nhập mô tả" required ></textarea>
                     <select name="id_brand" id="id_brand" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                         required>
                         <option value="" selected>Chọn thương hiệu</option>

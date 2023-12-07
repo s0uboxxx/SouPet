@@ -20,7 +20,7 @@
                             class="text-xs font-semibold tracking-wide text-left text-gray-500 uppercase border-b bg-gray-300">
                             <th class="px-4 py-3">#</th>
                             <th class="px-4 py-3">Tên</th>
-                            <th class="px-4 py-3">Số lượng sản phẩm</th>
+                            <th class="px-4 py-3">Số sản phẩm</th>
                             <th class="px-4 py-3">Hành động</th>
                         </tr>
                     </thead>
