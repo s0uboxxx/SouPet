@@ -3,10 +3,8 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Notifications\Messages\MailMessage;
 
 class OrderCreate extends Mailable
 {
@@ -19,7 +17,7 @@ class OrderCreate extends Mailable
     public $introLines;
     public $outroLines;
 
-    public $id_status;
+    public $status_id;
 
     public $displayableActionUrl;
 
@@ -28,7 +26,7 @@ class OrderCreate extends Mailable
      *
      * @return void
      */
-    public function __construct($level, $actionText, $greeting, $actionUrl, $introLines, $outroLines, $displayableActionUrl, $id_status)
+    public function __construct($level, $actionText, $greeting, $actionUrl, $introLines, $outroLines, $displayableActionUrl, $status_id)
     {
         $this->level = $level;
         $this->actionText = $actionText;
@@ -37,7 +35,7 @@ class OrderCreate extends Mailable
         $this->introLines = $introLines;
         $this->outroLines = $outroLines;
         $this->displayableActionUrl = $displayableActionUrl;
-        $this->id_status = $id_status;
+        $this->status_id = $status_id;
     }
 
     /**
@@ -54,8 +52,8 @@ class OrderCreate extends Mailable
             '4' => 'Đơn hàng hủy thành công',
         ];
 
-        $subject = isset($statusSubjectMap[$this->id_status])
-        ? $statusSubjectMap[$this->id_status]
+        $subject = isset($statusSubjectMap[$this->status_id])
+        ? $statusSubjectMap[$this->status_id]
         : 'Xin chào bạn';
 
         return $this->markdown('vendor.notifications.email', [
