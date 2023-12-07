@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\Schema;
 use App\Charts\TotalOrdersChart;
 use App\Charts\TotalBrandsChart;
 use App\Charts\TotalCategoryChart;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\OrderCreate;
+use App\Policies\ManagePolicy;
 
 class ManageController extends Controller
 {
@@ -96,12 +99,12 @@ class ManageController extends Controller
 
     public function create(Request $request, $manages)
     {
-        $this->authorize('create', $manages);
-
         $managesF = ucfirst($manages);
         $namespace = 'App\\Models\\';
 
         $manage = resolve($namespace . $managesF);
+
+        $this->authorize('create', $manage);
 
         $formData = $request->all();
 
@@ -151,8 +154,6 @@ class ManageController extends Controller
 
     public function delete(Request $request, $manages)
     {
-        $this->authorize('delete', $manages);
-
         $id = $request->id;
 
         $manages = ucfirst($manages);
@@ -160,26 +161,117 @@ class ManageController extends Controller
 
         $manage = resolve($namespace . $manages)::find($id);
 
+        $this->authorize('delete', $manage);
+
         session()->flash('success', 'Dữ liệu đã được xóa.');
 
         $manage->delete();
+
+        if ($manages == 'product') {
+            $storage = Storage::where('product_id', $id)->first();
+            $storage->delete();
+
+            $product_category = ProductCategory::where('id_product', $id)->get();
+            foreach ($product_category as $pc) {
+                $pc->delete();
+            }
+        }
+
+        if ($manages == 'brand') {
+            $products = Product::where('brand_id', $id)->get();
+            foreach ($products as $product) {
+                $product->brand_id = 14;
+                $product->save();
+            }
+        }
+
+        if ($manages == 'category') {
+            $products = ProductCategory::where('id_category', $id)->get();
+            foreach ($products as $product) {
+                $product->delete();
+            }
+        }
 
         return redirect()->back();
     }
 
     public function edit(Request $request, $manages)
     {
-        $this->authorize('delete', $manages);
-        
         $id = $request->id;
 
         $managesF = ucfirst($manages);
         $namespace = 'App\\Models\\';
         $manage = resolve($namespace . $managesF);
 
+        $this->authorize('edit', $manage);
+
         $arrayCategory = $request->id_category;
 
         $formData = $request->except('id', '_token', 'image', 'quantityAdd', 'id_category');
+
+        if ($manages == 'order') {
+            if ($request->has('status_id') == 2) {
+                $name = explode(' ', auth()->user()->name)[count(explode(' ', auth()->user()->name)) - 1];
+                $level = 'success';
+                $productId = $manage->where('id', $id)->first()->product_id;
+                $productName = Product::where('id', $productId)->first()->name;
+                $total = $manage->where('id', $id)->first()->total;
+                $actionText = 'Xem chi tiết';
+                $greeting = 'Xin chào ' . $name . ',';
+                $actionUrl = 'http://da.test/order/d?id=' . $id;
+
+                $introLines = [
+                    'Đơn hàng của bạn đã được vận chuyển.',
+                    'Thông tin đơn hàng:',
+                    'Sản phẩm: ' . $productName,
+                    'Tổng tiền: ' . number_format($total, 0, ',', '.') . '₫',
+                ];
+
+                $outroLines = [];
+
+                Mail::to(auth()->user()->email)->send(new OrderCreate($level, $actionText, $greeting, $actionUrl, $introLines, $outroLines, $actionUrl, 2));
+            } else if ($request->has('status_id') == 3) {
+                $name = explode(' ', auth()->user()->name)[count(explode(' ', auth()->user()->name)) - 1];
+                $level = 'success';
+                $productId = $manage->where('id', $id)->first()->product_id;
+                $productName = Product::where('id', $productId)->first()->name;
+                $total = $manage->where('id', $id)->first()->total;
+                $actionText = 'Xem chi tiết';
+                $greeting = 'Xin chào ' . $name . ',';
+                $actionUrl = 'http://da.test/order/d?id=' . $id;
+
+                $introLines = [
+                    'Đơn hàng của bạn đã được giao thành công.',
+                    'Thông tin đơn hàng:',
+                    'Sản phẩm: ' . $productName,
+                    'Tổng tiền: ' . number_format($total, 0, ',', '.') . '₫',
+                ];
+
+                $outroLines = [];
+
+                Mail::to(auth()->user()->email)->send(new OrderCreate($level, $actionText, $greeting, $actionUrl, $introLines, $outroLines, $actionUrl, 3));
+            } else if ($request->has('status_id') == 4) {
+                $name = explode(' ', auth()->user()->name)[count(explode(' ', auth()->user()->name)) - 1];
+                $level = 'success';
+                $productId = $manage->where('id', $id)->first()->product_id;
+                $productName = Product::where('id', $productId)->first()->name;
+                $total = $manage->where('id', $id)->first()->total;
+                $actionText = 'Xem chi tiết';
+                $greeting = 'Xin chào ' . $name . ',';
+                $actionUrl = 'http://da.test/order/d?id=' . $id;
+
+                $introLines = [
+                    'Đơn hàng của bạn đã bị hủy.',
+                    'Thông tin đơn hàng:',
+                    'Sản phẩm: ' . $productName,
+                    'Tổng tiền: ' . number_format($total, 0, ',', '.') . '₫',
+                ];
+
+                $outroLines = [];
+
+                Mail::to(auth()->user()->email)->send(new OrderCreate($level, $actionText, $greeting, $actionUrl, $introLines, $outroLines, $actionUrl, 4));
+            }
+        }
 
         if ($request->has('quantityAdd')) {
             $quantityAdd = $request->quantityAdd;
