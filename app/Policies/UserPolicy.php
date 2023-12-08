@@ -8,7 +8,7 @@ class UserPolicy
 {
     public function edit(User $user)
     {
-        return $user->id == 4;
+        return $user->id_role == 4;
     }
 
     public function create(User $user)
