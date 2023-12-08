@@ -226,7 +226,7 @@ class ProductController extends Controller
     public function trackingOrder()
     {
         $user = auth()->user();
-        $storeOrders = Order::where('user_id', $user->id)->orderBy('id', 'desc')->get();
+        $storeOrders = Order::where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(6);
 
         return view('shop.order-tracking', compact('storeOrders'));
     }

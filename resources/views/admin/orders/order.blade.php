@@ -51,11 +51,31 @@
                                 </td>
                                 <td class="px-4 py-3 text-ellipsis overflow-hidden w-48"
                                     style="max-width: 200px;text-overflow:ellipsis">
-                                    {{ $order->address }}
+                                    <button class="text-blue-500 hover:text-blue-700"
+                                        onmouseover="showData('{{ $order->address }}')" onmouseout="hideData()">
+                                        <svg class="h-8 w-8 text-blue-500" width="24" height="24" viewBox="0 0 24 24"
+                                            stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                                            stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" />
+                                            <circle cx="12" cy="12" r="2" />
+                                            <path d="M2 12l1.5 2a11 11 0 0 0 17 0l1.5 -2" />
+                                            <path d="M2 12l1.5 -2a11 11 0 0 1 17 0l1.5 2" />
+                                        </svg>
+                                    </button>
                                 </td>
                                 <td class="px-4 py-3 text-ellipsis overflow-hidden w-48"
                                     style="max-width: 200px;text-overflow:ellipsis">
-                                    {{ $order->phone }}
+                                    <button class="text-blue-500 hover:text-blue-700"
+                                        onmouseover="showData('{{ $order->phone }}')" onmouseout="hideData()">
+                                        <svg class="h-8 w-8 text-blue-500" width="24" height="24" viewBox="0 0 24 24"
+                                            stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+                                            stroke-linejoin="round">
+                                            <path stroke="none" d="M0 0h24v24H0z" />
+                                            <circle cx="12" cy="12" r="2" />
+                                            <path d="M2 12l1.5 2a11 11 0 0 0 17 0l1.5 -2" />
+                                            <path d="M2 12l1.5 -2a11 11 0 0 1 17 0l1.5 2" />
+                                        </svg>
+                                    </button>
                                 </td>
                                 <td class="px-4 py-3 text-ellipsis overflow-hidden w-48"
                                     style="max-width: 200px;text-overflow:ellipsis">
@@ -98,9 +118,6 @@
     </div>
 @endsection
 
-{{-- @section('head_scripts')
-    <script>
-        var urlr = '/manages'
-        window.history.replaceState(null, null, urlr);
-    </script>
-@endsection --}}
+@section('admin-body-scripts')
+    <script src="{{ asset('js/script-si.js') }}" defer></script>
+@endsection

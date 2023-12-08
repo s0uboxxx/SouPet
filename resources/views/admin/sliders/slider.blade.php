@@ -26,7 +26,7 @@
                     </thead>
                     <tbody class="bg-gray-100 divide-y text-white">
                         @foreach ($sliders as $slider)
-                            <tr class="text-gray-700 dark:text-gray-400">
+                            <tr class="text-gray-700">
                                 <td class="px-4 py-3">
                                     {{ ($sliders->currentPage() - 1) * $sliders->perPage() + $loop->iteration }}
                                 </td>
@@ -81,13 +81,6 @@
         @endif
     </div>
 @endsection
-
-{{-- @section('head_scripts')
-    <script>
-        var urlr = '/manages'
-        window.history.replaceState(null, null, urlr);
-    </script>
-@endsection --}}
 
 @section('admin-body-scripts')
     <script src="{{ asset('js/script-ip.js') }}" defer></script>

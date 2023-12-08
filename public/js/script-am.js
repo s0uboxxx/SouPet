@@ -38,6 +38,15 @@ function showForm(id, values, title, actionText, url) {
     if (actionText === "Sửa") {
         document.getElementById("id").value = id;
 
+        const email = document.getElementById("email");
+        if (email) {
+            email.disabled = true;
+        }
+
+        const image = document.getElementById("image");
+        if (image) {
+            image.removeAttribute("required");
+        }
         if (values.image) {
             imagePreview = document.getElementById("image-preview");
             if (imagePreview) {
@@ -87,5 +96,15 @@ function closeForm() {
     if (document.getElementById("id_status")) {
         const idStatus = document.getElementById("id_status");
         idStatus.hidden = true;
+    }
+
+    const email = document.getElementById("email");
+    if (email) {
+        email.disabled = false;
+    }
+
+    const image = document.getElementById("image");
+    if (image) {
+        image.required = true;
     }
 }

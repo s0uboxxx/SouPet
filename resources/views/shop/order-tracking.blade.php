@@ -9,11 +9,15 @@
                 <table class="min-w-full divide-y-2 divide-gray-200 bg-white text-sm">
                     <thead class="ltr:text-left rtl:text-right">
                         <tr>
+                            <th class="whitespace-nowrap px-4 py-2 font-bold text-gray-900">#</th>
                             <th class="whitespace-nowrap px-4 py-2 font-bold text-gray-900">
                                 Tên sản phẩm
                             </th>
                             <th class="whitespace-nowrap px-4 py-2 font-bold text-gray-900">
                                 Tổng tiền
+                            </th>
+                            <th class="whitespace-nowrap px-4 py-2 font-bold text-gray-900">
+                                Ngày đặt hàng
                             </th>
                             <th class="whitespace-nowrap px-4 py-2 font-bold text-gray-900">
                                 Trạng thái
@@ -26,10 +30,16 @@
                     @foreach ($storeOrders as $order)
                         <tbody class="divide-y divide-gray-200">
                             <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                                {{ ($storeOrders->currentPage() - 1) * $storeOrders->perPage() + $loop->iteration }}
+                            </td>
+                            <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                                 {{ $order->product->name }}
                             </td>
                             <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                                 {{ number_format($order->total, 0, ',', '.') }} đ
+                            </td>
+                            <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
+                                {{ $order->created_at->format('d/m/Y') }}
                             </td>
                             <td class="whitespace-nowrap px-4 py-2 font-medium text-gray-900">
                                 {{ $order->orderStatus->status }}
@@ -46,8 +56,8 @@
                                     </svg>
                                 </a>
                                 @if ($order->status_id == 1)
-                                    <button 
-                                    onclick="openModal('{{ '/ordercancel?id=' . $order->id }}', 'Hủy đặt hàng', '{{ $order->product->name }}')">
+                                    <button
+                                        onclick="openModal('{{ '/ordercancel?id=' . $order->id }}', 'Hủy đặt hàng', '{{ $order->product->name }}')">
                                         <svg class="h-8 w-8 text-red-500" fill="none" viewBox="0 0 24 24"
                                             stroke="currentColor">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -60,6 +70,11 @@
                     @endforeach
                 </table>
             </div>
+            @if ($storeOrders->total() > 0)
+                <div class="mt-4">
+                    {{ $storeOrders->links() }}
+                </div>
+            @endif
         </div>
     </div>
 @endsection
