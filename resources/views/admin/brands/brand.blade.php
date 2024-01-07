@@ -79,14 +79,3 @@
         @endif
     </div>
 @endsection
-
-{{-- @section('body_scripts')
-    <script src="{{ asset('js/script-am.js') }}" defer></script>
-@endsection --}}
-
-{{-- @section('head_scripts')
-    <script>
-        var urlr = '/manages'
-        window.history.replaceState(null, null, urlr);
-    </script>
-@endsection --}}
