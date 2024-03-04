@@ -29,6 +29,6 @@ class Product extends Model
 
     public function storage()
     {
-        return $this->hasMany(Storage::class);
+        return $this->hasMany(Storage::class, 'product_id');
     }
 }

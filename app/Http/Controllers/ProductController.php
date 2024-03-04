@@ -172,7 +172,7 @@ class ProductController extends Controller
     {
         $user = auth()->user();
 
-        if($user->id_role != 1) {
+        if($user->id_role != 3) {
             session()->flash('success', 'Vui lòng sử dụng tài khoản khách hàng để đặt hàng!');
             return redirect()->route('home');
         }
@@ -196,8 +196,18 @@ class ProductController extends Controller
         $storeOrder->save();
 
         $productQuantity = Storage::where('product_id', $request->productId)->first();
-        $productQuantity->quantity -= $request->quantity;
-        $productQuantity->save();
+        if ($productQuantity) {
+            if ($productQuantity->quantity >= $request->quantity) {
+                $productQuantity->quantity -= $request->quantity;
+                $productQuantity->save();
+            } else {
+                session()->flash('error', 'Sản phẩm không đủ trong kho.');
+                return redirect()->back();
+            }
+        } else {
+            session()->flash('error', 'Sản phẩm không tồn tại trong kho.');
+            return redirect()->back();
+        }
 
         session()->flash('success', 'Đặt hàng thành công.');
 
@@ -244,6 +254,7 @@ class ProductController extends Controller
         $quantity = $storeOrder->quantity;
 
         $productQuantity = Storage::where('product_id', $productId)->first();
+
         $productQuantity->quantity += $quantity;
         $productQuantity->save();
 
