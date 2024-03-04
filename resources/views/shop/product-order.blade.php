@@ -41,14 +41,14 @@
                                     <label for="phone">Số điện thoại</label>
                                     <input type="text" name="phone" id="phone"
                                         class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" value="{{ $user->phone }}"
-                                        pattern="^0?[0-9]{9}$" title="Vui lòng nhập đúng số điện thoại. VD: 0123456789" />
+                                        pattern="^0?[0-9]{9}$" title="Vui lòng nhập đúng số điện thoại. VD: 0123456789" require/>
                                 </div>
 
                                 <div class="md:col-span-5">
                                     <label for="address">Địa chỉ cụ thể</label>
                                     <input type="text" name="address" id="address"
                                         class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                                        value="{{ $user->address }}" />
+                                        value="{{ $user->address }}" require/>
                                 </div>
 
                                 <input type="hidden" name="productId" value=" {{ $product->id }}">
